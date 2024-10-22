@@ -51,4 +51,4 @@ class Network:
                     visited.add(flight.destination)
                     to_visit.append(flight.destination)
 
-        return {airport.name for airport in visited}
+        return set(airport.name for airport in visited)

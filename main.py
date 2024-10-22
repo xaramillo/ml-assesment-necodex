@@ -19,7 +19,7 @@ from graph import Airport, Flight, Network
 def data_etl(data_path):
     # Read in routes.csv provided to you
     df = pd.read_csv(data_path)
-    routes = df.copy() 
+    routes = df.copy()
     # Rename 'destination apirport' column name to 'destination airport'
     routes = routes.rename(columns={'destination apirport':'destination airport'})
     # Drop 'codeshare' column
@@ -28,12 +28,13 @@ def data_etl(data_path):
     routes = routes.dropna(axis=0)
     # Filter out airlines not in airline_set
     airline_set = set(routes['airline']) # I'm assuming this is the airline_set, but can be defined elsewhere
-    routes = df[df['airline'].isin(airline_set)]
+    routes = routes[routes['airline'].isin(airline_set)]
     # Convert 'source airport id' and 'destination airport id' to int
     routes['source airport id'] = routes['source airport id'].astype(int)
     # Convert 'destination airport id' to int
     routes['destination airport id'] = routes['destination airport id'].astype(int)
     # Print dataframe
+    print(routes.shape)
     print(routes)
     return(routes)
 
@@ -53,7 +54,7 @@ def make_routes_network(routes_df):
     airport_dict = {}
     # I'll search line by line
     for k, row in routes_df.iterrows():
-        print(f'iteration: {k} of {routes_df.shape[0]}') # I could use tqdm to print status instead
+        print(f'iteration: {k}') # I could use tqdm to print status instead
         # these variables are stored temporarly
         source_airport = row['source airport']
         source_id = row['source airport id']
