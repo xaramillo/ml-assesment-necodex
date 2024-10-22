@@ -40,4 +40,15 @@ class Network:
     # from B to C, then list both B and C as destinations. Remember to add a print
     # statement at the bottom of main.py calling this function.
     def list_all_dest(self, source: Airport) -> set[str]:
-        pass
+        visited = set()
+        to_visit = [source] # We'll use our source airport as the first node
+        # I am going to do a node search algorithm, this will consist on check for nodes next to our airport of interest
+        # and then check if the next airport has another destinations as well
+        while to_visit:
+            current_airport = to_visit.pop()
+            for flight in self.flights:
+                if flight.source == current_airport and flight.destination not in visited:
+                    visited.add(flight.destination)
+                    to_visit.append(flight.destination)
+
+        return {airport.name for airport in visited}
